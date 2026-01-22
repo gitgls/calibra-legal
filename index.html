@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,13 +14,13 @@
             --accent: #10b981;
             --border: #27272a;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
             background: var(--bg);
@@ -27,63 +28,63 @@
             line-height: 1.7;
             padding: 2rem 1rem;
         }
-        
+
         .container {
             max-width: 800px;
             margin: 0 auto;
         }
-        
+
         header {
             text-align: center;
             margin-bottom: 3rem;
             padding-bottom: 2rem;
             border-bottom: 1px solid var(--border);
         }
-        
+
         .logo {
             font-size: 2.5rem;
             font-weight: 700;
             color: var(--accent);
             margin-bottom: 0.5rem;
         }
-        
+
         .subtitle {
             color: var(--text-muted);
             font-size: 1.1rem;
         }
-        
+
         .updated {
             color: var(--text-muted);
             font-size: 0.9rem;
             margin-top: 1rem;
         }
-        
+
         h2 {
             color: var(--accent);
             margin: 2.5rem 0 1rem;
             font-size: 1.5rem;
         }
-        
+
         h3 {
             color: var(--text);
             margin: 1.5rem 0 0.75rem;
             font-size: 1.1rem;
         }
-        
+
         p {
             margin-bottom: 1rem;
             color: var(--text-muted);
         }
-        
+
         ul {
             margin: 1rem 0 1rem 1.5rem;
             color: var(--text-muted);
         }
-        
+
         li {
             margin-bottom: 0.5rem;
         }
-        
+
         .highlight-box {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -91,49 +92,50 @@
             padding: 1.5rem;
             margin: 1.5rem 0;
         }
-        
+
         .highlight-box.accent {
             border-color: var(--accent);
             background: rgba(16, 185, 129, 0.1);
         }
-        
+
         .dont-list {
             list-style: none;
             margin-left: 0;
         }
-        
+
         .dont-list li {
             padding-left: 1.5rem;
             position: relative;
         }
-        
+
         .dont-list li::before {
             content: "❌";
             position: absolute;
             left: 0;
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
         }
-        
-        th, td {
+
+        th,
+        td {
             padding: 0.75rem;
             text-align: left;
             border-bottom: 1px solid var(--border);
         }
-        
+
         th {
             color: var(--text);
             font-weight: 600;
         }
-        
+
         td {
             color: var(--text-muted);
         }
-        
+
         .contact {
             text-align: center;
             margin-top: 3rem;
@@ -141,18 +143,18 @@
             background: var(--card-bg);
             border-radius: 12px;
         }
-        
+
         .contact a {
             color: var(--accent);
             text-decoration: none;
             font-size: 1.2rem;
         }
-        
+
         .lang-switch {
             text-align: center;
             margin-bottom: 2rem;
         }
-        
+
         .lang-switch a {
             color: var(--accent);
             text-decoration: none;
@@ -162,12 +164,13 @@
             margin: 0 0.5rem;
             display: inline-block;
         }
-        
-        .lang-switch a:hover, .lang-switch a.active {
+
+        .lang-switch a:hover,
+        .lang-switch a.active {
             background: var(--accent);
             color: var(--bg);
         }
-        
+
         footer {
             text-align: center;
             margin-top: 3rem;
@@ -178,26 +181,28 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="lang-switch">
             <a href="index.html" class="active">English</a>
             <a href="it.html">Italiano</a>
         </div>
-        
+
         <header>
             <div class="logo">Calibra</div>
             <p class="subtitle">Privacy Policy</p>
-            <p class="updated">Last updated: January 22, 2025</p>
+            <p class="updated">Last updated: January 22, 2026</p>
         </header>
-        
+
         <main>
             <h2>Introduction</h2>
-            <p>Calibra ("we", "our", or "the app") is an application for tracking weight and body composition. Your privacy is important to us. This Privacy Policy explains how we handle your data.</p>
-            
+            <p>Calibra ("we", "our", or "the app") is an application for tracking weight and body composition. Your
+                privacy is important to us. This Privacy Policy explains how we handle your data.</p>
+
             <h2>Data We Collect</h2>
             <p>The Calibra app may store the following data that you voluntarily enter:</p>
-            
+
             <h3>Body Data</h3>
             <ul>
                 <li>Body weight</li>
@@ -205,22 +210,22 @@
                 <li>Body fat percentage</li>
                 <li>Height, age, sex (for metabolic calculations)</li>
             </ul>
-            
+
             <h3>Usage Data</h3>
             <ul>
                 <li>Weight and body composition goals</li>
                 <li>App preferences (theme, notifications, etc.)</li>
                 <li>Weigh-in history and progress</li>
             </ul>
-            
+
             <h3>Purchase Data</h3>
             <ul>
                 <li>License status (Free/Trial/Pro)</li>
                 <li>Any redeemed promotional codes</li>
             </ul>
-            
+
             <h2>How We Store Data</h2>
-            
+
             <div class="highlight-box accent">
                 <h3>🔒 Local Storage</h3>
                 <p><strong>ALL your personal data is stored EXCLUSIVELY on your device.</strong></p>
@@ -231,10 +236,12 @@
                     <li>There is no cloud account or synchronization</li>
                 </ul>
             </div>
-            
+
             <h3>In-App Purchases</h3>
-            <p>In-app purchases are handled by Google Play. We do not collect or store payment data. For details, see <a href="https://policies.google.com/privacy" style="color: var(--accent);">Google Play's Privacy Policy</a>.</p>
-            
+            <p>In-app purchases are handled by Google Play. We do not collect or store payment data. For details, see <a
+                    href="https://policies.google.com/privacy" style="color: var(--accent);">Google Play's Privacy
+                    Policy</a>.</p>
+
             <h2>What We DON'T Do</h2>
             <div class="highlight-box">
                 <ul class="dont-list">
@@ -243,11 +250,38 @@
                     <li>We DON'T use invasive analytics or tracking</li>
                     <li>We DON'T collect data in the background</li>
                     <li>We DON'T require registration or accounts</li>
+                    <li>We DON'T collect personally identifiable information through analytics</li>
                 </ul>
             </div>
-            
+
+            <h2>Anonymous Analytics (Firebase)</h2>
+            <p>To improve the application and optimize advertising campaigns, we use Google's Firebase Analytics. This
+                service
+                collects <strong>only anonymous and aggregated data</strong>:</p>
+            <ul>
+                <li>Number of app installations</li>
+                <li>Screens viewed (without content)</li>
+                <li>Generic events (e.g., "onboarding completed", "weigh-in recorded")</li>
+                <li>Device country and language</li>
+                <li>Device type (e.g., "Android 14, Pixel 7")</li>
+            </ul>
+            <p><strong>NOT collected</strong>:</p>
+            <ul>
+                <li>Weight or body measurement data</li>
+                <li>Personal information (name, email, etc.)</li>
+                <li>Content of weigh-ins or goals</li>
+            </ul>
+            <p>Data is anonymized and used only to understand how the app is used and improve it. For more information,
+                see
+                <a href="https://firebase.google.com/support/privacy" style="color: var(--accent);">Firebase Privacy
+                    Policy</a>.
+            </p>
+            <p>You can disable data collection in your Android device settings (Settings → Google → Ads → Opt out of Ads
+                Personalization).</p>
+
             <h2>Anonymous Operational Notifications</h2>
-            <p>For operational purposes, the app sends anonymous notifications to the developer in the following cases:</p>
+            <p>For operational purposes, the app sends anonymous notifications to the developer in the following cases:
+            </p>
             <ul>
                 <li>Completion of initial setup (new user)</li>
                 <li>Purchase of the Pro version</li>
@@ -258,24 +292,25 @@
                 <li>App version</li>
                 <li>Date and time of the event</li>
             </ul>
-            <p>They do <strong>NOT</strong> contain your name, email, device ID, or any personal data you enter in the app. They are used solely to monitor service health.</p>
-            
+            <p>They do <strong>NOT</strong> contain your name, email, device ID, or any personal data you enter in the
+                app. They are used solely to monitor service health.</p>
+
             <h2>Your Control</h2>
             <p>You have full control over your data:</p>
-            
+
             <h3>Export</h3>
             <p>You can export all your data to CSV format at any time through the app settings.</p>
-            
+
             <h3>Import</h3>
             <p>You can import data from CSV files to restore backups or migrate from other apps.</p>
-            
+
             <h3>Deletion</h3>
             <p>You can delete all your data at any time by:</p>
             <ul>
                 <li>Settings → Data Management → Reset Data</li>
                 <li>Uninstalling the application</li>
             </ul>
-            
+
             <h2>Notifications</h2>
             <p>The app may send you local notifications for:</p>
             <ul>
@@ -283,8 +318,9 @@
                 <li>Weekly summary</li>
                 <li>Streak at risk alerts</li>
             </ul>
-            <p>These notifications are completely local and configurable. You can disable them at any time in settings.</p>
-            
+            <p>These notifications are completely local and configurable. You can disable them at any time in settings.
+            </p>
+
             <h2>Permissions Required</h2>
             <table>
                 <tr>
@@ -304,31 +340,34 @@
                     <td>To schedule notifications after device restart</td>
                 </tr>
             </table>
-            
+
             <h2>Security</h2>
             <ul>
                 <li>Data is stored locally in encrypted format</li>
                 <li>There are no login credentials to protect</li>
                 <li>CSV backups are your responsibility</li>
             </ul>
-            
+
             <h2>Children</h2>
-            <p>The app is not intended for children under 13 years old. We do not knowingly collect personal data from minors.</p>
-            
+            <p>The app is not intended for children under 13 years old. We do not knowingly collect personal data from
+                minors.</p>
+
             <h2>Changes to Privacy Policy</h2>
-            <p>We may update this Privacy Policy occasionally. We will notify you of any significant changes through the app or by updating the date at the top.</p>
-            
+            <p>We may update this Privacy Policy occasionally. We will notify you of any significant changes through the
+                app or by updating the date at the top.</p>
+
             <div class="contact">
                 <h2>Contact</h2>
                 <p>For questions about privacy or your data:</p>
                 <a href="mailto:com.calibra.app@gmail.com">📧 com.calibra.app@gmail.com</a>
             </div>
         </main>
-        
+
         <footer>
             <p>This Privacy Policy is effective as of December 15, 2024.</p>
             <p style="margin-top: 1rem;">© 2024 Calibra. All rights reserved.</p>
         </footer>
     </div>
 </body>
+
 </html>
