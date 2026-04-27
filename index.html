@@ -98,22 +98,6 @@
             background: rgba(16, 185, 129, 0.1);
         }
 
-        .dont-list {
-            list-style: none;
-            margin-left: 0;
-        }
-
-        .dont-list li {
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .dont-list li::before {
-            content: "❌";
-            position: absolute;
-            left: 0;
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
@@ -192,18 +176,22 @@
         <header>
             <div class="logo">Calibra</div>
             <p class="subtitle">Privacy Policy</p>
-            <p class="updated">Last updated: January 22, 2026</p>
+            <p class="updated">Last updated: April 28, 2026</p>
         </header>
 
         <main>
             <h2>Introduction</h2>
             <p>Calibra ("we", "our", or "the app") is an application for tracking weight and body composition. Your
                 privacy is important to us. This Privacy Policy explains how we handle your data.</p>
+            <p>Calibra is designed as a <strong>local-first</strong> application: your raw tracking data (weight,
+                measurements, goals) is stored on your device and never uploaded to external servers in its raw form.
+                Some optional and infrastructure features require minimal server-side metadata, described in detail
+                below.</p>
 
             <h2>Data We Collect</h2>
-            <p>The Calibra app may store the following data that you voluntarily enter:</p>
+            <p>The Calibra app may store or process the following data:</p>
 
-            <h3>Body Data</h3>
+            <h3>Body Data (stored locally on your device)</h3>
             <ul>
                 <li>Body weight</li>
                 <li>Body measurements (waist, hips, neck, thighs, arms)</li>
@@ -211,7 +199,7 @@
                 <li>Height, age, sex (for metabolic calculations)</li>
             </ul>
 
-            <h3>Usage Data</h3>
+            <h3>Usage Data (stored locally on your device)</h3>
             <ul>
                 <li>Weight and body composition goals</li>
                 <li>App preferences (theme, notifications, etc.)</li>
@@ -221,83 +209,214 @@
             <h3>Purchase Data</h3>
             <ul>
                 <li>License status (Free/Trial/Pro)</li>
-                <li>Any redeemed promotional codes</li>
+                <li>Promotional codes redeemed (see Purchases &amp; Promo Codes section)</li>
             </ul>
 
             <h2>How We Store Data</h2>
 
             <div class="highlight-box accent">
-                <h3>🔒 Local Storage</h3>
-                <p><strong>ALL your personal data is stored EXCLUSIVELY on your device.</strong></p>
-                <ul>
-                    <li>We use Hive, an encrypted local database</li>
-                    <li>Your personal data (weight, measurements, goals) is NEVER sent to external servers</li>
-                    <li>Your data is NEVER shared with third parties</li>
-                    <li>There is no cloud account or synchronization</li>
-                </ul>
+                <h3>Local-First Storage</h3>
+                <p>Your raw personal data (weight, measurements, goals, weigh-in history) is stored
+                    <strong>exclusively on your device</strong> using Hive, an encrypted local database. This data is
+                    never uploaded to external servers in its raw form.</p>
             </div>
+
+            <h3>Firebase Anonymous Authentication</h3>
+            <p>At startup, the app creates an anonymous Firebase authentication session. This provides a pseudonymous
+                backend identifier used solely to:</p>
+            <ul>
+                <li>Authenticate requests to Calibra's backend functions</li>
+                <li>Manage AI feature access, trial quota, and entitlement state</li>
+                <li>Enforce abuse-prevention rate limits</li>
+            </ul>
+            <p>This is <strong>not</strong> a user-facing account. No email, password, or profile information is
+                collected. The anonymous identifier cannot be linked to you personally.</p>
+
+            <h3>Firebase App Check</h3>
+            <p>The app uses Firebase App Check (Google Play Integrity on Android) to verify that requests originate
+                from an authentic, unmodified copy of the app. This is an integrity attestation mechanism and does not
+                transmit your personal data.</p>
+
+            <h2>AI Daily Insight (Optional Feature)</h2>
+            <p>Calibra offers an optional AI-powered Daily Insight that provides a short, personalized message about
+                your progress. This feature is gated by access tier (trial or Pro) and is not active for all users.</p>
+            <p>When you use this feature:</p>
+            <ol>
+                <li><strong>What stays on your device:</strong> Your full tracking history, raw weight entries, and all
+                    body data remain stored locally and are never sent to the server in their entirety.</li>
+                <li><strong>What is sent to the server:</strong> The app computes a minimal, summarized signal payload
+                    and sends it to the Calibra backend. This payload includes an installation-specific identifier
+                    (<code>aiInstallationId</code>), your locale (language), a content-based signature used for caching
+                    (<code>impactSignature</code>), a payload version tag, and summarized context fields such as goal
+                    direction, impact verdict, confidence level, trend direction and strength, goal alignment, number of
+                    entries, 24-hour weight change, weekly velocity (kg/week), and comparison basis.</li>
+                <li><strong>Backend processing:</strong> The backend uses the summarized payload to generate a
+                    natural-language insight via OpenAI's API. The raw payload is not stored long-term; a cached version
+                    of the generated message is kept server-side for up to 7 days to avoid redundant API calls.</li>
+                <li><strong>Server-side metadata:</strong> The backend stores usage metadata (generation count,
+                    timestamps) for up to 90 days to manage trial quotas and enforce rate limits.</li>
+            </ol>
+
+            <h2>Purchases &amp; Promo Codes</h2>
 
             <h3>In-App Purchases</h3>
-            <p>In-app purchases are handled by Google Play. We do not collect or store payment data. For details, see <a
-                    href="https://policies.google.com/privacy" style="color: var(--accent);">Google Play's Privacy
+            <p>In-app purchases are handled by Google Play. Calibra does not collect or store payment card or payment
+                instrument data. For details, see <a href="https://policies.google.com/privacy"
+                    style="color: var(--accent);">Google Play's Privacy Policy</a>.</p>
+            <p>When you purchase Calibra Pro, the following verification metadata is stored on the Calibra backend
+                (Firestore, EU region) to manage your access:</p>
+            <ul>
+                <li>Purchase tier and source (e.g., "play_purchase")</li>
+                <li>Product ID and package name</li>
+                <li>Order ID (as provided by Google Play)</li>
+                <li>A SHA-256 hash of the purchase token (the raw token is not stored)</li>
+                <li>Purchase state and acknowledgment status</li>
+                <li>Verification timestamp</li>
+            </ul>
+
+            <h3>Promo Code Redemption</h3>
+            <p>When you redeem a promotional code:</p>
+            <ul>
+                <li>The promo code and its expiry date are sent to the backend</li>
+                <li>If valid, an entitlement record is stored including the promo code, expiry date, and activation
+                    timestamp</li>
+                <li>This data is retained as needed to manage your access and prevent abuse</li>
+            </ul>
+
+            <h2>Analytics (Firebase)</h2>
+            <p>To improve the application and optimize advertising campaigns, we use Google's Firebase Analytics.
+                Firebase Analytics collects event-level data that may include the following parameters:</p>
+            <p><strong>Events tracked:</strong></p>
+            <ul>
+                <li>Screen views</li>
+                <li>Onboarding flow (start, step progress, completion, abandon)</li>
+                <li>Weight events (weight added — includes the weight value and entry source, weight edited, weight
+                    deleted)</li>
+                <li>Goal events (goal set, goal reached — includes goal type)</li>
+                <li>CSV import/export (import includes entry count)</li>
+                <li>Smoothing operations</li>
+                <li>Paywall views (includes source)</li>
+                <li>Purchase events (Pro purchase, purchase restored)</li>
+                <li>Promo code redeemed (includes the promo code)</li>
+                <li>AI insight events (success, fallback, error — includes reason/error and source)</li>
+                <li>Achievement unlocks (includes achievement ID)</li>
+                <li>Theme changes</li>
+            </ul>
+            <p><strong>Device metadata automatically collected by Firebase:</strong></p>
+            <ul>
+                <li>Device country, language, and type</li>
+                <li>App version</li>
+            </ul>
+            <p>Firebase assigns a pseudo-anonymous identifier to each installation. This data is used to understand
+                how the app is used and to improve it. For more information, see <a
+                    href="https://firebase.google.com/support/privacy" style="color: var(--accent);">Firebase Privacy
                     Policy</a>.</p>
+            <p>You can disable data collection in your Android device settings (Settings &rarr; Google &rarr; Ads
+                &rarr; Opt out of Ads Personalization).</p>
 
-            <h2>What We DON'T Do</h2>
-            <div class="highlight-box">
-                <ul class="dont-list">
-                    <li>We DON'T send your personal data to external servers</li>
-                    <li>We DON'T share your data with third parties</li>
-                    <li>We DON'T use invasive analytics or tracking</li>
-                    <li>We DON'T collect data in the background</li>
-                    <li>We DON'T require registration or accounts</li>
-                    <li>We DON'T collect personally identifiable information through analytics</li>
-                </ul>
-            </div>
+            <h2>Operational Notifications</h2>
+            <p>For operational monitoring purposes, the app sends event notifications to the developer via the Calibra
+                backend, which forwards them to Telegram in the following cases:</p>
 
-            <h2>Anonymous Analytics (Firebase)</h2>
-            <p>To improve the application and optimize advertising campaigns, we use Google's Firebase Analytics. This
-                service
-                collects <strong>only anonymous and aggregated data</strong>:</p>
-            <ul>
-                <li>Number of app installations</li>
-                <li>Screens viewed (without content)</li>
-                <li>Generic events (e.g., "onboarding completed", "weigh-in recorded")</li>
-                <li>Device country and language</li>
-                <li>Device type (e.g., "Android 14, Pixel 7")</li>
-            </ul>
-            <p><strong>NOT collected</strong>:</p>
-            <ul>
-                <li>Weight or body measurement data</li>
-                <li>Personal information (name, email, etc.)</li>
-                <li>Content of weigh-ins or goals</li>
-            </ul>
-            <p>Data is anonymized and used only to understand how the app is used and improve it. For more information,
-                see
-                <a href="https://firebase.google.com/support/privacy" style="color: var(--accent);">Firebase Privacy
-                    Policy</a>.
-            </p>
-            <p>You can disable data collection in your Android device settings (Settings → Google → Ads → Opt out of Ads
-                Personalization).</p>
-
-            <h2>Anonymous Operational Notifications</h2>
-            <p>For operational purposes, the app sends anonymous notifications to the developer in the following cases:
-            </p>
-            <ul>
-                <li>Completion of initial setup (new user)</li>
-                <li>Purchase of the Pro version</li>
-            </ul>
-            <p>These notifications contain <strong>only</strong>:</p>
+            <h3>Installation Notification</h3>
+            <p>When a new user completes initial setup:</p>
             <ul>
                 <li>Platform (e.g., "android")</li>
                 <li>App version</li>
-                <li>Date and time of the event</li>
-                <li>Configuration type selected (e.g., "express" or "advanced")</li>
+                <li>Date and time</li>
+                <li>Onboarding type selected (e.g., "express" or "advanced")</li>
             </ul>
-            <p>They do <strong>NOT</strong> contain your name, email, device ID, or any personal data you enter in the
-                app. They are used solely to monitor service health.</p>
+
+            <h3>Purchase Notification</h3>
+            <p>When a Pro purchase is completed:</p>
+            <ul>
+                <li>Product ID</li>
+                <li>Price</li>
+                <li>Date and time</li>
+            </ul>
+            <p>These notifications are sent first to the Calibra backend (Cloud Functions, EU region) over HTTPS. The
+                backend authenticates every request via Firebase Auth (anonymous identifier) and Firebase App Check (app
+                integrity verification), then forwards the message to Telegram. They do not contain your name, email, or
+                any personal data you entered in the app. They are used solely to monitor service health and sales
+                activity.</p>
+
+            <h2>Support &amp; Bug Reports</h2>
+            <p>The app includes a "Report a Problem" feature that allows you to voluntarily send a bug report to the
+                developer. When you choose to use this feature:</p>
+            <ul>
+                <li>You can write a description of the issue</li>
+                <li>The app attaches a log file containing recent debug output from your session</li>
+                <li>The log may include app version, device platform, and technical diagnostic information</li>
+                <li>The report is sent via your device's email app or share sheet to com.calibra.app@gmail.com</li>
+            </ul>
+            <p>This data is shared <strong>only when you explicitly choose to send it</strong>. Logs are not
+                transmitted automatically.</p>
+
+            <h2>Server-Side Data Retention</h2>
+            <table>
+                <tr>
+                    <th>Data Type</th>
+                    <th>Retention Period</th>
+                </tr>
+                <tr>
+                    <td>AI cached insights</td>
+                    <td>Up to 7 days</td>
+                </tr>
+                <tr>
+                    <td>AI usage metadata (trial quota)</td>
+                    <td>Up to 90 days</td>
+                </tr>
+                <tr>
+                    <td>Rate-limit counters</td>
+                    <td>1-hour rolling window</td>
+                </tr>
+                <tr>
+                    <td>Entitlement records (purchase/promo)</td>
+                    <td>Retained as needed to manage access</td>
+                </tr>
+                <tr>
+                    <td>Purchase verification metadata</td>
+                    <td>Retained as needed to manage access</td>
+                </tr>
+            </table>
+            <p>The Calibra backend runs on Google Cloud (europe-west1 region).</p>
+
+            <h2>Third-Party Processors</h2>
+            <p>The following third-party services process data on behalf of Calibra:</p>
+            <table>
+                <tr>
+                    <th>Service</th>
+                    <th>Purpose</th>
+                    <th>Privacy Policy</th>
+                </tr>
+                <tr>
+                    <td>Google Firebase (Auth, App Check, Analytics, Firestore, Cloud Functions)</td>
+                    <td>Authentication, app integrity, analytics, data storage, backend logic</td>
+                    <td><a href="https://firebase.google.com/support/privacy"
+                            style="color: var(--accent);">firebase.google.com/support/privacy</a></td>
+                </tr>
+                <tr>
+                    <td>Google Play</td>
+                    <td>In-app purchase processing</td>
+                    <td><a href="https://policies.google.com/privacy"
+                            style="color: var(--accent);">policies.google.com/privacy</a></td>
+                </tr>
+                <tr>
+                    <td>OpenAI</td>
+                    <td>AI insight message generation</td>
+                    <td><a href="https://openai.com/privacy"
+                            style="color: var(--accent);">openai.com/privacy</a></td>
+                </tr>
+                <tr>
+                    <td>Telegram</td>
+                    <td>Operational notifications (install/purchase alerts)</td>
+                    <td><a href="https://telegram.org/privacy"
+                            style="color: var(--accent);">telegram.org/privacy</a></td>
+                </tr>
+            </table>
 
             <h2>Your Control</h2>
-            <p>You have full control over your data:</p>
+            <p>You have full control over your local data:</p>
 
             <h3>Export</h3>
             <p>You can export all your data to CSV format at any time through the app settings.</p>
@@ -306,11 +425,13 @@
             <p>You can import data from CSV files to restore backups or migrate from other apps.</p>
 
             <h3>Deletion</h3>
-            <p>You can delete all your data at any time by:</p>
+            <p>You can delete all your local data at any time by:</p>
             <ul>
-                <li>Settings → Data Management → Reset Data</li>
+                <li>Settings &rarr; Data Management &rarr; Reset Data</li>
                 <li>Uninstalling the application</li>
             </ul>
+            <p><strong>Note:</strong> Server-side entitlement and usage metadata is managed by the developer. You can
+                request deletion by contacting com.calibra.app@gmail.com.</p>
 
             <h2>Notifications</h2>
             <p>The app may send you local notifications for:</p>
@@ -340,13 +461,19 @@
                     <td>Boot completed</td>
                     <td>To schedule notifications after device restart</td>
                 </tr>
+                <tr>
+                    <td>Internet access</td>
+                    <td>For AI features, purchase verification, analytics, and app integrity checks</td>
+                </tr>
             </table>
 
             <h2>Security</h2>
             <ul>
-                <li>Data is stored locally in encrypted format</li>
-                <li>There are no login credentials to protect</li>
-                <li>CSV backups are your responsibility</li>
+                <li>Local data is stored in encrypted format using Hive</li>
+                <li>Server-side data is stored in Google Cloud (EU region) with Firebase security rules</li>
+                <li>Communication with backend functions uses HTTPS and requires both Firebase Auth and App Check</li>
+                <li>Purchase tokens are stored as SHA-256 hashes, never in plain text</li>
+                <li>No login credentials or passwords are required from you</li>
             </ul>
 
             <h2>Children</h2>
@@ -365,8 +492,8 @@
         </main>
 
         <footer>
-            <p>This Privacy Policy is effective as of December 15, 2024.</p>
-            <p style="margin-top: 1rem;">© 2024 Calibra. All rights reserved.</p>
+            <p>This Privacy Policy is effective as of April 19, 2026.</p>
+            <p style="margin-top: 1rem;">© 2024-2026 Calibra. All rights reserved.</p>
         </footer>
     </div>
 </body>
